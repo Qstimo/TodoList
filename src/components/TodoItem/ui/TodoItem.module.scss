@@ -1,0 +1,38 @@
+.todo_item_container {
+    background-color: var(--bg-color);
+    min-width: 300px;
+    max-width: 500px;
+    padding: 25px 20px;
+    border-radius: 5px;
+    flex: 1 1 auto;
+    box-shadow: 3px 8px 5px 1px rgba(34, 60, 80, 0.59);
+
+}
+
+.todo_item_container:nth-child(odd) {
+    background-color: rgb(44, 44, 44);
+    color: white;
+    opacity: 0.98;
+}
+
+.todo_item_title {
+    font-size: 25px;
+    cursor: pointer;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+
+.todo_item_deadline {
+    color: red;
+    text-decoration: line-through;
+
+}
+
+.todo_item_data {
+    font: var(--font-m);
+}
+
+.todo_item_task_container {
+    padding-left: 15px;
+}

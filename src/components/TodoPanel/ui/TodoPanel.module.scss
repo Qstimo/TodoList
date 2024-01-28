@@ -1,0 +1,58 @@
+.TodoPanel {
+    background-color: var(--bg-color);
+    box-shadow: 0px 8px 11px 8px rgba(34, 60, 80, 0.09);
+    margin-bottom: 15px;
+    padding: 25px 20px;
+    border-radius: 5px;
+    max-width: 700px;
+
+}
+
+.fields_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.field_container {
+    width: 100%;
+
+    label {}
+}
+
+.button_container {
+    width: 100%;
+    text-align: right;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 15px;
+
+}
+
+.tasks_container {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.field_input_date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    input {
+        max-width: 350px;
+    }
+
+
+}
+
+.tasks_container {
+    margin-left: 25px;
+}
