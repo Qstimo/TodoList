@@ -14,6 +14,7 @@ const tasks = [
 const tasks1 = [
     {
         id: 1,
+        name: 'task1',
         mainTask: { name: 'task1', description: 'description1', checked: false },
         tasks: [
             { name: 'task1', description: 'description1', checked: false },
@@ -21,17 +22,20 @@ const tasks1 = [
             { name: 'task1', description: 'description1', checked: false },
             { name: 'task1', description: 'description1', checked: false }
         ],
-        data: '', deadline: ''
+        data: '',
+        deadline: ''
     },
+
     {
         id: 1,
-        mainTask: { name: 'task1', description: 'description1', checked: false },
+        name: 'task1',
         tasks: [
             { name: 'task1', description: 'description1', checked: false },
             { name: 'task1', description: 'description1', checked: true },
 
         ],
-        data: '', deadline: ''
+        data: '',
+        deadline: ''
     },
 
 
@@ -51,12 +55,10 @@ export const MainPage = () => {
         // }))
     }
 
-    console.log(todos)
     return (
         <div className={cls.MainPage}>
             <div className="content">
-                <TodoPanel />
-                <TodoList todos={todos} />
+                <TodoList />
             </div>
         </div>
     )

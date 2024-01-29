@@ -12,9 +12,10 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
     const [deadline, setDeadline] = React.useState(false)
     return (
         <div className={classNames(cls.todo_item_container, { [cls.todo_item_deadline]: deadline, }, [])}>
-            <TodoTask task={todo.mainTask} />
+            <h3>{todo.name}</h3>
             <div className={cls.todo_item_task_container}>
-                {todo.tasks.map((task, id) => <TodoTask key={id} task={task} />)}
+                {todo.tasks.map((task, id) =>
+                    <TodoTask key={id} task={task} />)}
             </div>
             {todo.deadline && <p className={cls.todo_item_data}>До {todo.deadline}</p>}
         </div>

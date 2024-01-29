@@ -26,8 +26,8 @@ export const TodoInput = ({ task, setTask, tasks, id }: TodoInputProps) => {
     return (
         <div className={cls.TodoInput}>
             <div className={cls.field_container} >
-                <label htmlFor="task">
-                    <Input onChange={onChange} placeholder='Название задачи' value={task.task} name='task' id='task' type="text" />
+                <label htmlFor="name">
+                    <Input onChange={onChange} placeholder='Название задачи' value={task.name} name='name' id='name' type="text" />
                 </label>
             </div>
             <div className={cls.field_container} >

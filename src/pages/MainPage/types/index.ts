@@ -4,8 +4,8 @@ export type Task = {
     checked: boolean,
 }
 export type Todo = {
+    name: string,
     id: number,
-    mainTask: Task
     tasks: Task[],
     data: string,
     deadline: string
