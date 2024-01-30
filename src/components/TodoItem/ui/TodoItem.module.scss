@@ -12,7 +12,7 @@
 }
 
 .todo_item_container:nth-child(odd) {
-    background-color: rgb(44, 44, 44);
+    background-color: var(--bg-item);
     color: white;
     opacity: 0.98;
 }
@@ -26,7 +26,7 @@
 
 
 .todo_item_deadline {
-    color: red !important;
+    color: var(--red) !important;
 
 }
 
@@ -36,9 +36,9 @@
     right: 10px;
     top: 30px;
     padding: 10px;
-    border: 2px solid red;
+    border: 2px solid var(--red);
     transform: rotate(25deg);
-    color: red;
+    color: var(--red);
     display: none;
     z-index: 3;
     backdrop-filter: blur(2px)
