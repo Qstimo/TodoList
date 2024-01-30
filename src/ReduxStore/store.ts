@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import todo from "../modules/TodoList/ui/slice/TodoSlice";
 import { useDispatch } from "react-redux";
+import modal from './slices/ModalSlice'
 
 const store = configureStore({
     reducer: {
-        todo
+        todo,
+        modal
     }
 })
 

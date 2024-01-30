@@ -1,20 +1,27 @@
 .TodoList {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 15px;
     justify-content: center;
     align-items: baseline;
 
+    @media(min-width: 600px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media(min-width: 900px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 
 }
 
 .select {
-
+    margin-left: -10px;
     display: flex;
     letter-spacing: 2px;
     margin-bottom: 20px;
 
-    @media(max-width: 700px) {}
+
 
     span {
         padding: 15px 5px;

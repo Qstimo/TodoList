@@ -8,6 +8,8 @@ import { formatDate } from '../../helpers/NewData/NewData'
 import { TodoInput } from './TodoInput/TodoInput'
 import axios from '../../../components/helpers/axios'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../../../ReduxStore/store'
+import { modalIsOpenSet } from '../../../ReduxStore/slices/ModalSlice'
 
 const DEFAULT_TODO = {
     name: '',
@@ -31,7 +33,7 @@ export const TodoPanel = () => {
         const { name, value } = event.target
         setTodo({ ...todo, [name]: value })
     }
-
+    const dispatch = useAppDispatch()
     const onClick = async () => {
         if (todo.name.length > 1 && tasks[0].name.length > 1) {
             try {
@@ -43,12 +45,12 @@ export const TodoPanel = () => {
                 const todoBody = {
                     ...todo, deadline, tasks, date: date,
                 }
-                console.log(todoBody)
                 const { data } = await axios.post('/todo', todoBody)
                 setTasks(DEFAULT_TODO_TASK)
                 setTodo(DEFAULT_TODO)
+                dispatch(modalIsOpenSet())
                 // setTimeout(() => {  }, 200);
-                navigate(`/`);
+
             } catch (error) {
                 console.warn(error);
                 alert('Ошибка загрузки');
@@ -75,7 +77,7 @@ export const TodoPanel = () => {
             <div className={cls.fields_container}>
                 <div className={cls.field_container}>
                     <label htmlFor="name ">
-                        <Input value={todo.name} placeholder='Событие' onChange={onChange} name='name' id='name ' type="text" />
+                        <Input maxLength={80} value={todo.name} placeholder='Событие' onChange={onChange} name='name' id='name ' type="text" />
                     </label>
                 </div>
                 <div className={cls.tasks_container}>

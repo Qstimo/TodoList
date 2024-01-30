@@ -6,20 +6,31 @@ import { useSelector } from 'react-redux';
 import { Status, fetchTodo, fetchTodoComplited, selectTask } from './slice/TodoSlice';
 import { useAppDispatch } from '../../../ReduxStore/store';
 import { Loading } from '../../../components/Loading/LoadingSvg';
+import { selectIsOpenModal } from '../../../ReduxStore/slices/ModalSlice';
 interface TodoListProps {
 }
 export const TodoList = () => {
-    const [todos, setTodos] = React.useState(null);
-    const { items, status } = useSelector(selectTask)
+    const { items, status } = useSelector(selectTask);
+
+    const { isOpenModal, toggle } = useSelector(selectIsOpenModal);
+
     const dispatch = useAppDispatch();
+
     const [select, setSelect] = React.useState({ name: 'Текущие', sortProperty: 'new' });
+
     const isLoading = status === Status.LOADING;
+
     const isErorr = status === Status.ERROR;
+
     React.useEffect(() => {
-        select.sortProperty === 'new'
-            ? dispatch(fetchTodo())
-            : dispatch(fetchTodoComplited())
-    }, [select]);
+
+        if (!isOpenModal) {
+            select.sortProperty === 'new'
+                ? dispatch(fetchTodo())
+                : dispatch(fetchTodoComplited())
+        }
+
+    }, [select, isOpenModal, toggle]);
     const selectItem = (obj: any) => {
         setSelect(obj);
     }
