@@ -23,6 +23,7 @@ const DEFAULT_TODO_TASK = [{
 }]
 
 export const TodoPanel = () => {
+
     const navigate = useNavigate();
 
     const [todo, setTodo] = React.useState(DEFAULT_TODO)
@@ -33,7 +34,9 @@ export const TodoPanel = () => {
         const { name, value } = event.target
         setTodo({ ...todo, [name]: value })
     }
+
     const dispatch = useAppDispatch()
+
     const onClick = async () => {
         if (todo.name.length > 1 && tasks[0].name.length > 1) {
             try {
@@ -49,18 +52,15 @@ export const TodoPanel = () => {
                 setTasks(DEFAULT_TODO_TASK)
                 setTodo(DEFAULT_TODO)
                 dispatch(modalIsOpenSet())
-                // setTimeout(() => {  }, 200);
 
             } catch (error) {
                 console.warn(error);
                 alert('Ошибка загрузки');
             }
 
-
-
-
         }
     }
+
     const onClickTask = () => {
         setTasks([...tasks, {
             id: tasks.length + 1,
@@ -69,11 +69,17 @@ export const TodoPanel = () => {
             checked: false
         }])
     }
+
     const onClickTaskDelete = () => {
         setTasks(tasks.filter((_, i) => i !== tasks.length - 1))
     }
+    const onClickClose = () => {
+        dispatch(modalIsOpenSet())
+    }
+
     return (
         <div className={cls.TodoPanel}>
+            <button onClick={onClickClose} className={cls.btn_close}><span></span></button>
             <div className={cls.fields_container}>
                 <div className={cls.field_container}>
                     <label htmlFor="name ">
@@ -89,8 +95,8 @@ export const TodoPanel = () => {
                             id={e.id}
                             key={i} />)}
                     <div className={cls.button_container}>
-                        <Button onClick={onClickTask} theme={ButtonTheme.CLEAR_BLUE}>Добавить </Button>
-                        <Button onClick={onClickTaskDelete} theme={ButtonTheme.CLEAR_BLUE}>Удалить </Button>
+                        {tasks.length < 6 && <Button onClick={onClickTask} theme={ButtonTheme.CLEAR_BLUE}>Добавить </Button>}
+                        {tasks.length > 1 && <Button onClick={onClickTaskDelete} theme={ButtonTheme.CLEAR_BLUE}>Удалить </Button>}
                     </div>
                     <div className={cls.field_container}>
                         <label className={cls.field_input_date} htmlFor="deadline ">
@@ -103,7 +109,8 @@ export const TodoPanel = () => {
                     <Button
                         onClick={onClick}
                         theme={ButtonTheme.CLEAR_BLUE}>
-                        Добавить</Button>
+                        Добавить
+                    </Button>
                 </div>
             </div>
         </div>

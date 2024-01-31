@@ -7,6 +7,8 @@
     z-index: 10;
     opacity: 0;
     pointer-events: none;
+
+
 }
 
 .overlay {
@@ -16,13 +18,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 8px;
+        background-color: #d6d6d6;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #878787;
+        border-radius: 9em;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #253861;
+    }
 }
 
 .content {
+    max-height: 100vh;
+    overflow: auto;
+
+
+
     @media (min-width: 750px) {
         padding: 20px;
         border-radius: 12px;
-
     }
 
     flex: 1 1;

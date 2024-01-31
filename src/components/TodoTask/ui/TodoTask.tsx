@@ -3,7 +3,7 @@ import cls from './TodoTask.module.scss'
 import { classNames } from '../../../ui/helpers/Classnames/classnames'
 import { Task, Todo } from '../../../pages/MainPage/types'
 import { Button, ButtonTheme } from '../../../ui/Button/ui/Button'
-import axios from '../../helpers/axios'
+
 interface TodoTaskProps {
     task: Task,
     checkedTask: (id: number) => void,
