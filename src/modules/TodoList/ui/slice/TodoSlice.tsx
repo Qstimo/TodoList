@@ -17,9 +17,11 @@ const initialState: TTodo = {
     items: [],
     status: Status.LOADING
 }
-export const fetchTodo = createAsyncThunk('todo/fetchTodo', async () => {
+export const fetchTodo = createAsyncThunk('todo/fetchTodo', async (searchTerm?: string) => {
     try {
-        const { data } = await axios.get(`/todo`)
+        const { data } = searchTerm
+            ? await axios.get(`/todo?searchTerm=${searchTerm}`)
+            : await axios.get(`/todo`)
         return data
     } catch (error) {
         console.log(error)

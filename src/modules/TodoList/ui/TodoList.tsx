@@ -7,6 +7,8 @@ import { Status, fetchTodo, fetchTodoComplited, selectTask } from './slice/TodoS
 import { useAppDispatch } from '../../../ReduxStore/store';
 import { Loading } from '../../../components/Loading/LoadingSvg';
 import { selectIsOpenModal } from '../../../ReduxStore/slices/ModalSlice';
+import { Search } from '../../../components/Search';
+import { selectSearch } from '../../../ReduxStore/slices/SearchSlice';
 interface TodoListProps {
 }
 export const TodoList = () => {
@@ -21,16 +23,16 @@ export const TodoList = () => {
     const isLoading = status === Status.LOADING;
 
     const isErorr = status === Status.ERROR;
-
+    const search = useSelector(selectSearch);
     React.useEffect(() => {
 
         if (!isOpenModal) {
             select.sortProperty === 'new'
-                ? dispatch(fetchTodo())
+                ? dispatch(fetchTodo(search))
                 : dispatch(fetchTodoComplited())
         }
 
-    }, [select, isOpenModal, toggle]);
+    }, [select, isOpenModal, toggle, search]);
     const selectItem = (obj: any) => {
         setSelect(obj);
     }
@@ -45,11 +47,15 @@ export const TodoList = () => {
 
     return (
         <>
-            <div className={cls.select}> {list.map(obj => <span
-                key={obj.name}
-                className={obj.sortProperty === select.sortProperty ? cls.active : ''}
-                onClick={() => selectItem(obj)}
-            >{obj.name}</span>)}
+            <div className={cls.select}>
+                {list.map(obj =>
+                    <span
+                        key={obj.name}
+                        className={obj.sortProperty === select.sortProperty ? cls.active : ''}
+                        onClick={() => selectItem(obj)}
+                    >{obj.name}
+                    </span>)}
+                {select.sortProperty === "new" && <Search />}
             </div>
             <div className={cls.TodoList}>
 

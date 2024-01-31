@@ -6,9 +6,11 @@ import { Button, ButtonTheme } from '../../../ui/Button/ui/Button'
 import axios from '../../helpers/axios'
 interface TodoTaskProps {
     task: Task,
-    checkedTask: (id: number) => void
+    checkedTask: (id: number) => void,
+    removeTask: (id: number) => void,
+    last: boolean
 }
-export const TodoTask = ({ task, checkedTask }: TodoTaskProps) => {
+export const TodoTask = ({ task, checkedTask, removeTask, last }: TodoTaskProps) => {
     const [isOpen, setIsOpen] = React.useState(false)
     const descriptionToggle = () => {
         setIsOpen(prev => !prev)
@@ -29,10 +31,10 @@ export const TodoTask = ({ task, checkedTask }: TodoTaskProps) => {
                     {task.description}
                 </p>
             </label>
-            {/* <div className={cls.todo_item_button_container}>
-                <Button disabled={task.checked} theme={ButtonTheme.CLEAR_GREEN}> Редактировать</Button>
-                <Button disabled={task.checked} theme={ButtonTheme.GREEN}> Удалить</Button>
-            </div> */}
+            <div className={cls.todo_item_button_container}>
+                {/* <Button disabled={task.checked} theme={ButtonTheme.CLEAR_GREEN}> Редактировать</Button> */}
+                {!last && <Button onClick={() => removeTask(task.id)} disabled={task.checked} theme={ButtonTheme.GREEN}>Удалить</Button>}
+            </div>
             <hr />
         </div>
     )

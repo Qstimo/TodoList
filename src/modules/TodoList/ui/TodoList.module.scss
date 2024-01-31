@@ -16,12 +16,31 @@
 }
 
 .select {
-    margin-left: -10px;
     display: flex;
+    flex-direction: column;
     letter-spacing: 2px;
     margin-bottom: 20px;
+    text-align: center;
+    margin: 0 -5px 10px;
 
+    @media (min-width: 600px) {
+        flex-direction: row;
+        text-align: left;
+    }
 
+    input {
+        padding-bottom: 7px;
+    }
+
+    input::placeholder {
+        letter-spacing: 2px;
+        font: var(--font-l);
+        text-align: center;
+
+        @media (min-width: 600px) {
+            text-align: left;
+        }
+    }
 
     span {
         padding: 15px 5px;

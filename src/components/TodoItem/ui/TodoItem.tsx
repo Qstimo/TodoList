@@ -18,6 +18,7 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
     const dispatch = useAppDispatch();
 
     const [deadline, setDeadline] = React.useState(false);
+    const [latsTask, setLatsTask] = React.useState(false);
 
     React.useEffect(() => {
         if (todo.deadline) {
@@ -27,7 +28,9 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
                 setDeadline(true)
             }
         }
-
+        if (todo.tasks.length < 2) {
+            setLatsTask(true)
+        }
     }, [])
 
     const checkedTask = async (id: number) => {
@@ -41,6 +44,18 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
                 })
             ]
             const { data } = await axios.patch(`/todo/checked/${todo._id}`, { files })
+            dispatch(toggleSet())
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const removeTask = async (id: number) => {
+        try {
+            const files = [
+                ...todo.tasks.filter(task => task.id !== id),
+            ]
+            const { data } = await axios.patch(`/todo/remove_task/${todo._id}`, { files })
             dispatch(toggleSet())
         } catch (error) {
             console.log(error)
@@ -63,7 +78,7 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
             <h3>{todo.name}</h3>
             <div className={cls.todo_item_task_container}>
                 {todo.tasks.map((task, id) =>
-                    <TodoTask checkedTask={checkedTask} key={id} task={task} />)}
+                    <TodoTask last={latsTask} checkedTask={checkedTask} removeTask={removeTask} key={id} task={task} />)}
             </div>
             {todo.deadline && <p className={cls.todo_item_data}>
                 До {deadlineFormat}

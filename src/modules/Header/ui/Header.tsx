@@ -7,9 +7,8 @@ import { modalIsOpenSet, selectIsOpenModal } from '../../../ReduxStore/slices/Mo
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../ReduxStore/store';
 interface HeaderProps {
-    countTodo: number;
 }
-export const Header = ({ countTodo }: HeaderProps) => {
+export const Header = ({ }: HeaderProps) => {
     const dispatch = useAppDispatch();
     const [isAuthModal, setIsAuthModal] = React.useState(false);
     const { isOpenModal } = useSelector(selectIsOpenModal)
