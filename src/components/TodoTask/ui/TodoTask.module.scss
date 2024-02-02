@@ -64,7 +64,12 @@
 }
 
 .todo_item_checked {
-    text-decoration: line-through;
+    text-decoration: line-through !important;
+
+    h4 {
+        text-decoration: line-through !important;
+
+    }
 }
 
 .todo_item_task_container {
