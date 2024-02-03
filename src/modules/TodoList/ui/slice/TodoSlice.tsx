@@ -11,11 +11,19 @@ export enum Status {
 }
 interface TTodo {
     items: Todo[],
-    status: Status
+    status: Status,
+    updateTodo: Todo
 }
 const initialState: TTodo = {
     items: [],
-    status: Status.LOADING
+    status: Status.LOADING,
+    updateTodo: {
+        name: "",
+        _id: "",
+        tasks: [],
+        data: "",
+        deadline: ""
+    }
 }
 export const fetchTodo = createAsyncThunk('todo/fetchTodo', async (searchTerm?: string) => {
     try {
@@ -40,7 +48,11 @@ export const fetchTodoComplited = createAsyncThunk('todo/fetchTodoCompleted', as
 const todoSlice = createSlice({
     name: 'todo',
     initialState,
-    reducers: {},
+    reducers: {
+        updateTodo: (state, action) => {
+            state.updateTodo = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchTodo.pending, (state) => {
             state.status = Status.LOADING
@@ -71,5 +83,6 @@ const todoSlice = createSlice({
 })
 
 export const selectTask = (state: RootState) => state.todo;
+export const { updateTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;

@@ -7,8 +7,9 @@ import { classNames } from '../../../ui/helpers/Classnames/classnames'
 import { TodoTask } from '../../TodoTask'
 import axios from '../../helpers/axios'
 import { useAppDispatch } from '../../../ReduxStore/store'
-import { toggleSet } from '../../../ReduxStore/slices/ModalSlice'
+import { editSet, modalIsOpenSet, toggleSet } from '../../../ReduxStore/slices/ModalSlice'
 import { formatDate, formattedDateDeadline } from '../../helpers/NewData/NewData'
+import { updateTodo } from '../../../modules/TodoList/ui/slice/TodoSlice'
 interface TodoItemProps {
     todo: Todo,
 }
@@ -19,17 +20,22 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
 
     const [deadline, setDeadline] = React.useState(false);
     const [latsTask, setLatsTask] = React.useState(false);
+    const [complitedTask, setComplitedTask] = React.useState(false);
 
     React.useEffect(() => {
+        const fullChecked = todo.tasks.some(e => e.checked === false)
+
         if (todo.deadline) {
             const newData = formatDate();
-            const fullChecked = todo.tasks.some(e => e.checked === false)
             if (newData > todo.deadline && fullChecked) {
                 setDeadline(true)
             }
         }
         if (todo.tasks.length < 2) {
             setLatsTask(true)
+        }
+        if (fullChecked) {
+            setComplitedTask(true)
         }
     }, [])
 
@@ -48,6 +54,12 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const update = async (todo: Todo) => {
+        dispatch(editSet())
+        dispatch(updateTodo(todo))
+        await dispatch(modalIsOpenSet())
     }
 
     const removeTask = async (id: number) => {
@@ -78,7 +90,8 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
             <h3>{todo.name}</h3>
             <div className={cls.todo_item_task_container}>
                 {todo.tasks.map((task, id) =>
-                    <TodoTask last={latsTask} checkedTask={checkedTask} removeTask={removeTask} key={id} task={task} />)}
+                    <TodoTask complitedTask={complitedTask} last={latsTask} checkedTask={checkedTask} removeTask={removeTask} key={id} task={task} />)}
+                {complitedTask && <Button onClick={() => update(todo)} className={cls.btn_update} theme={ButtonTheme.CLEAR_GREEN}>Изменить</Button>}
             </div>
             {todo.deadline && <p className={cls.todo_item_data}>
                 До {deadlineFormat}

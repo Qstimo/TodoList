@@ -3,9 +3,10 @@ import cls from './Header.module.scss'
 import { Modal } from '../../../components/Modal/Modal';
 import { TodoPanel } from '../../../components/TodoPanel';
 import { Button, ButtonTheme } from '../../../ui/Button/ui/Button';
-import { modalIsOpenSet, selectIsOpenModal } from '../../../ReduxStore/slices/ModalSlice';
+import { editCloseSet, modalIsOpenSet, selectIsOpenModal } from '../../../ReduxStore/slices/ModalSlice';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../ReduxStore/store';
+import { updateTodo } from '../../TodoList/ui/slice/TodoSlice';
 interface HeaderProps {
 }
 export const Header = ({ }: HeaderProps) => {
@@ -18,12 +19,12 @@ export const Header = ({ }: HeaderProps) => {
     const onToggleModal = React.useCallback(() => {
         dispatch(modalIsOpenSet())
         setIsAuthModal((prev) => !prev)
+        dispatch(editCloseSet())
     }, []);
     return (
         <div className={cls.Header}>
             <header className='content'>
                 <div className={cls.Header_container}              >
-                    <h3></h3>
                     <Button
                         theme={ButtonTheme.BLUE}
                         onClick={onToggleModal}

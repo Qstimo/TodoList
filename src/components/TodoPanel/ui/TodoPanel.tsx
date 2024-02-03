@@ -3,13 +3,14 @@ import cls from './TodoPanel.module.scss'
 import { Button } from '../../../ui/Button'
 import { ButtonTheme } from '../../../ui/Button/ui/Button'
 import { Input } from '../../../ui/Input'
-import { Todo } from '../../../pages/MainPage/types'
 import { formatDate } from '../../helpers/NewData/NewData'
 import { TodoInput } from './TodoInput/TodoInput'
 import axios from '../../../components/helpers/axios'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../ReduxStore/store'
-import { modalIsOpenSet } from '../../../ReduxStore/slices/ModalSlice'
+import { modalIsOpenSet, selectIsOpenModal } from '../../../ReduxStore/slices/ModalSlice'
+import { useSelector } from 'react-redux'
+import { selectTask } from '../../../modules/TodoList/ui/slice/TodoSlice'
 
 const DEFAULT_TODO = {
     name: '',
@@ -26,10 +27,23 @@ export const TodoPanel = () => {
 
     const navigate = useNavigate();
 
+    const { edit } = useSelector(selectIsOpenModal);
+    const { updateTodo } = useSelector(selectTask)
+
     const [todo, setTodo] = React.useState(DEFAULT_TODO)
 
     const [tasks, setTasks] = React.useState(DEFAULT_TODO_TASK)
 
+
+    React.useEffect(() => {
+        if (edit) {
+            setTodo({ ...updateTodo, deadline: updateTodo.deadline.slice(0, -5) })
+            setTasks(updateTodo?.tasks)
+        } else {
+            setTodo(DEFAULT_TODO)
+            setTasks(DEFAULT_TODO_TASK)
+        }
+    }, [updateTodo, edit])
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
         setTodo({ ...todo, [name]: value })
@@ -48,7 +62,9 @@ export const TodoPanel = () => {
                 const todoBody = {
                     ...todo, deadline, tasks, date: date,
                 }
-                const { data } = await axios.post('/todo', todoBody)
+                const { data } = edit
+                    ? await axios.patch(`/todo/${updateTodo._id}`, todoBody)
+                    : await axios.post(`/todo`, todoBody)
                 setTasks(DEFAULT_TODO_TASK)
                 setTodo(DEFAULT_TODO)
                 dispatch(modalIsOpenSet())
@@ -101,7 +117,13 @@ export const TodoPanel = () => {
                     <div className={cls.field_container}>
                         <label className={cls.field_input_date} htmlFor="deadline ">
                             <p>Выполнить до:</p>
-                            <Input value={todo.deadline} placeholder='Крайний срок' onChange={onChange} name='deadline' id='deadline ' type="datetime-local" />
+                            <Input
+                                value={todo.deadline}
+                                placeholder='Крайний срок'
+                                onChange={onChange}
+                                name='deadline'
+                                id='deadline '
+                                type="datetime-local" />
                         </label>
                     </div>
                 </div>

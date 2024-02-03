@@ -50,10 +50,12 @@
 
 .todo_item_data {
     font: var(--font-m);
+    text-align: right;
 }
 
 .todo_item_task_container {
     padding-left: 15px;
+    margin-bottom: 15px;
 }
 
 .btn_delete {
@@ -97,4 +99,8 @@
         transform: rotate(90deg);
 
     }
+}
+
+.btn_update {
+    margin-right: 0;
 }
